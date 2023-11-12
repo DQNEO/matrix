@@ -8,12 +8,14 @@ import (
 const DlmOpen = "("
 const DlmClose = ")"
 
+// Matrix defines a structure of RxC dimension
 type Matrix struct {
 	R    int
 	C    int
 	elms []float64
 }
 
+// NewMatrix creates a new matrix with specific row-column size and elements.
 func NewMatrix(r, c int, elms []float64) *Matrix {
 	if len(elms) != (r * c) {
 		panic(fmt.Sprintf("number of elements (%d) does not match the give type (%dx%d)",
@@ -27,6 +29,7 @@ func NewMatrix(r, c int, elms []float64) *Matrix {
 	}
 }
 
+// NewIdentityMatrix creates a new identity matrix of given size.
 func NewIdentityMatrix(n int) *Matrix {
 	m := NewZeroMatrix(n, n)
 	for ij := 1; ij <= n; ij++ {
@@ -54,6 +57,7 @@ func NewMatrixFromSlices(r, c int, colVectors [][]float64) *Matrix {
 	return m
 }
 
+// NewZeroMatrix creates a new matrix of given size with all elements initialized to zero.
 func NewZeroMatrix(r, c int) *Matrix {
 	m := &Matrix{
 		R:    r,
@@ -63,6 +67,7 @@ func NewZeroMatrix(r, c int) *Matrix {
 	return m
 }
 
+// Eq checks if two matrices are equal. It returns true if both matrices have the same dimensions and each element are equal, otherwise it returns false.
 func Eq(a *Matrix, b *Matrix) bool {
 	if a.Type() != b.Type() {
 		panic("error: type mismatch")
@@ -97,18 +102,23 @@ func (m *Matrix) index2ij(idx int) (i, j int) {
 	return
 }
 
+// GetElm retrieves the matrix element at a specific row and column.
 func (m *Matrix) GetElm(i, j int) float64 {
 	return m.elms[m.ij2Index(i, j)]
 }
 
+// SetElm replaces the existing element at the specified row and column position in the matrix with the provided value.
+// Please note that this operation modifies the original matrix and can't be reversed, so use with caution.
 func (m *Matrix) SetElm(r, c int, v float64) {
 	m.elms[m.ij2Index(r, c)] = v
 }
 
+// Type returns the size of the matrix as a string in the format "Matrix NxM".
 func (m *Matrix) Type() string {
 	return fmt.Sprintf("Matrix %dx%d", m.R, m.C)
 }
 
+// String returns a string representation of the matrix.
 func (m *Matrix) String() string {
 	var ret string
 	for i := 1; i <= m.R; i++ {
@@ -126,6 +136,7 @@ func (m *Matrix) String() string {
 	return ret
 }
 
+// Scale multiplies each element of the matrix with a scalar value and returns the result.
 func Scale(s float64, m *Matrix) *Matrix {
 	m2 := NewZeroMatrix(m.R, m.C)
 	for idx := 0; idx < len(m.elms); idx++ {
@@ -134,10 +145,12 @@ func Scale(s float64, m *Matrix) *Matrix {
 	return m2
 }
 
+// GetSize returns the number of rows and columns of the matrix.
 func (m *Matrix) GetSize() (int, int) {
 	return m.R, m.C
 }
 
+// Mul multiplies two matrices and returns the result.
 func Mul(a *Matrix, b *Matrix) *Matrix {
 	if a.C != b.R {
 		panic(fmt.Sprintf("type error: unable to multiply %s and %s", a.Type(), b.Type()))
@@ -161,6 +174,7 @@ func Mul(a *Matrix, b *Matrix) *Matrix {
 	return m
 }
 
+// Add adds two matrices and returns the result.
 func Add(a, b *Matrix) *Matrix {
 	if a.Type() != b.Type() {
 		panic("type mismatch")
@@ -177,7 +191,7 @@ func Add(a, b *Matrix) *Matrix {
 	return m
 }
 
-// Tr transposes a matrix
+// Tr transposes the matrix and returns the new matrix
 func (m *Matrix) Tr() *Matrix {
 	m2 := NewZeroMatrix(m.C, m.R)
 	for idx := 0; idx < len(m.elms); idx++ {
@@ -187,6 +201,7 @@ func (m *Matrix) Tr() *Matrix {
 	return m2
 }
 
+// Clone returns a new matrix which is a clone of the original matrix.
 func (m *Matrix) Clone() *Matrix {
 	elms2 := make([]float64, len(m.elms))
 	copy(elms2, m.elms)
@@ -295,6 +310,7 @@ func (m *Matrix) DoRowReduction() *Matrix {
 	return a
 }
 
+// Inv calculates the inverse of the matrix and returns it.
 func Inv(a *Matrix) *Matrix {
 	r, c := a.GetSize()
 	if r != c {
@@ -338,6 +354,7 @@ func JoinColVectors(a, b *Matrix) *Matrix {
 	return c
 }
 
+// Det calculates the determinant of the matrix.
 func (m *Matrix) Det() float64 {
 	if m.R != m.C {
 		panic("input should be a square matrix")
