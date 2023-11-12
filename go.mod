@@ -1,3 +1,3 @@
-module github.com/DQNEO/go-samples/matrix
+module github.com/DQNEO/matrix
 
 go 1.20
