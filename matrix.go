@@ -244,7 +244,6 @@ func (m *Matrix) ApplyRowBasicTransFormReplaceRow(i1 int, i2 int) *Matrix {
 }
 
 func (m *Matrix) DoRowReduction() *Matrix {
-	//fmt.Println("----- DoRowReduction start")
 	a := m.Clone()
 	pivotColOffset := 0
 
@@ -254,14 +253,10 @@ func (m *Matrix) DoRowReduction() *Matrix {
 		divisor := a.GetElm(pivotPosition, pivotPosition+pivotColOffset)
 		if divisor == 0 {
 			// look for non zero row and replace current row by that one
-			//fmt.Println("pivotPosition is 0. Looking for non zero row...")
 			for searchI := pivotPosition + 1; searchI <= a.R; searchI++ {
 				divisor = a.GetElm(searchI, pivotPosition+pivotColOffset)
 				if divisor != 0 {
-					//fmt.Println("found divisor", divisor, "at row", searchI)
-					//fmt.Println("ApplyRowBasicTransFormReplaceRow")
 					a = a.ApplyRowBasicTransFormReplaceRow(pivotPosition, searchI)
-					//fmt.Printf("a = \n%s", a)
 					goto LOOP_FIRST
 				}
 			}
@@ -273,22 +268,18 @@ func (m *Matrix) DoRowReduction() *Matrix {
 				goto LOOP_FIRST
 			}
 		}
-		//		fmt.Println("ApplyRowBasicTransformDiv", pivotPosition, divisor)
 		a = a.ApplyRowBasicTransformDiv(pivotPosition, divisor)
-		//fmt.Printf("a = \n%s", a)
 
 		// fill zero below the pivot
 		for i := pivotPosition + 1; i <= a.R; i++ {
 			rowHead := a.GetElm(i, pivotPosition+pivotColOffset)
-			//fmt.Println("ApplyRowBasicTransformAdd", -1*rowHead)
 			a = a.ApplyRowBasicTransformAdd(pivotPosition, -1*rowHead, i)
-			//fmt.Printf("a = \n%s", a)
 		}
 	}
+
 	// Now left bottom elements should be all zero.
 
 	// Making zero from right bottom
-	//fmt.Println("Making zero from right bottom")
 	for srcI := a.R; srcI >= 1; srcI-- {
 		var srcJ int
 		for j := 1; j <= a.C; j++ {
@@ -302,9 +293,7 @@ func (m *Matrix) DoRowReduction() *Matrix {
 		}
 		for trgtI := srcI - 1; trgtI >= 1; trgtI-- {
 			scalar := -1 * a.GetElm(trgtI, srcJ)
-			//fmt.Println("ApplyRowBasicTransformAdd", trgtI, srcJ, scalar)
 			a = a.ApplyRowBasicTransformAdd(srcI, scalar, trgtI)
-			//fmt.Printf("a = \n%s", a)
 		}
 	}
 	return a
