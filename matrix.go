@@ -321,12 +321,12 @@ func Inv(a *Matrix) *Matrix {
 	m := JoinColVectors(b, ident)
 	m2 := m.DoRowReduction()
 
-	// Extract right half
-	m3 := m2.SliceColVectors(a.C+1, m2.C)
-	return m3
+	// Slice the right half of m2
+	return m2.SliceColumns(a.C+1, m2.C)
 }
 
-func (m *Matrix) SliceColVectors(from int, to int) *Matrix {
+// SliceColumns returns a slice of selected columns of the original matrix
+func (m *Matrix) SliceColumns(from int, to int) *Matrix {
 	m2 := NewZeroMatrix(m.R, to-from+1)
 	for i := 1; i <= m.R; i++ {
 		for j := from; j <= to; j++ {
