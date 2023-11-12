@@ -3,7 +3,7 @@ package main
 import (
 	"fmt"
 
-	"github.com/DQNEO/go-samples/matrix"
+	"github.com/DQNEO/matrix"
 )
 
 func main() {
