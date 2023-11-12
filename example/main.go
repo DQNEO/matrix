@@ -9,9 +9,9 @@ import (
 func main() {
 	// Create a new 3x3 matrix
 	m1 := matrix.NewMatrix(3, 3, []float64{
-		1, 2, 3,
-		4, 5, 6,
-		7, 8, 9,
+		0, 2, 1,
+		2, 0, 0,
+		0, 3, 2,
 	})
 
 	// Create another 3x3 matrix
@@ -48,6 +48,16 @@ func main() {
 	fmt.Println("\nInverse Matrix:")
 	fmt.Println(inv.String())
 
+	//Create a new Identity matrix with size 3x3
+	identity := matrix.NewIdentityMatrix(3)
+	fmt.Println("\nNew 3x3 Identity Matrix: ")
+	fmt.Println(identity.String())
+
+	// Check if the original matrix x the inverse matrix matches identity matrix
+	isEqual := matrix.Eq(matrix.Mul(m1, inv), identity)
+	if isEqual {
+		fmt.Println("\n m1 * inv == identity")
+	}
 	// Transpose m1
 	transposed := m1.Tr()
 	fmt.Println("\nTransposed Matrix 1:")
@@ -67,11 +77,6 @@ func main() {
 	elm := m1.GetElm(2, 3)
 	fmt.Println("\nElement at (2,3) in Matrix 1:")
 	fmt.Println(elm)
-
-	//Create a new Identity matrix with size 2
-	identity := matrix.NewIdentityMatrix(2)
-	fmt.Println("\nNew 2x2 Identity Matrix: ")
-	fmt.Println(identity.String())
 
 	//Create a new zero matrix with size 3x2
 	zero := matrix.NewZeroMatrix(3, 2)

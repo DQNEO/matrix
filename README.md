@@ -90,12 +90,12 @@ func main() {
 	fmt.Println("\nElement at (2,3) in Matrix 1:")
 	fmt.Println(elm)
 
-	//Create a new Identity matrix with size 2
+	// Create a new Identity matrix with size 2
 	identity := matrix.NewIdentityMatrix(2)
 	fmt.Println("\nNew 2x2 Identity Matrix: ")
 	fmt.Println(identity.String())
 
-	//Create a new zero matrix with size 3x2
+	// Create a new zero matrix with size 3x2
 	zero := matrix.NewZeroMatrix(3, 2)
 	fmt.Println("\nNew 3x2 Zero Matrix: ")
 	fmt.Println(zero.String())
