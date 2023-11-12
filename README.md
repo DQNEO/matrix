@@ -1,7 +1,12 @@
 # Matrix Go Library
 
-This is a simple and easy-to-use library for matrix calculations implemented in go. 
-It provides a set of common operations such as addition, multiplication, transposition, inversion, determinant and others requisite for matrix manipulation in most applications.
+A simple and easy-to-use library for matrix calculations implemented in Go.
+It provides a set of common operations such as addition, multiplication, transposition, inversion, determinant and others requisite for matrix manipulation.
+
+The purpose of this library is mainly to help learners of linear algebra.
+Optimization of the code is not heavily done, with emphasis placed on readability and simplicity of implementation.
+By reading this code, you can understand how matrix calculations can be performed in software.
+
 
 ## Installation
 
