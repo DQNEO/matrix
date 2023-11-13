@@ -327,6 +327,7 @@ func (m *Matrix) SliceColumns(from int, to int) *Matrix {
 
 }
 
+// JoinColVectors 2 matrices as column vectors into one double-width matrix
 func JoinColVectors(a, b *Matrix) *Matrix {
 	c := NewZeroMatrix(a.R, a.C+b.C)
 	for i := 1; i <= a.R; i++ {
